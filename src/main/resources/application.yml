@@ -23,7 +23,18 @@ spring:
     listener:
       simple: 
         concurrency: 4
-        max-concurrency: 8
+        max-concurrency: 8  
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${BENEFICIOS_MAIL_USERNAME:alertador.pruebas@gmail.com}
+    password: ${BENEFICIOS_MAIL_PASSWORD:xnxtfmuidfolhitn}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 queue:
   name: orders
   exchange: ""

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Processing Email Template</title>
+</head>
+<body>
+  <h2>La orden '<span th:text="${order.id}"></span>' esta siendo procesada</h2>
+  <p>
+    <h4>Datos de la orden</h4>
+    <ul>
+      <li>
+        Cliente: 
+        <span th:text="${order.customer.firstName + ' ' + order.customer.lastName}"></span>
+      </li>
+      <li>Fecha: <span th:text="${order.orderDate}"></span></li>
+      <li>Número de orden: Fecha: <span th:text="${order.orderNumber}"></span></li>
+    </ul>
+    <h4>Productos comprados</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio Unitario</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="item : ${order.items}">
+          <td th:text="${item.product.productName}"></td>
+          <td th:text="${#numbers.formatDecimal(item.unitPrice,2,2)}"></td>
+          <td th:text="${item.quantity}"></td>
+          <td th:text="${#numbers.formatDecimal(item.unitPrice * item.quantity,2,2)}"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">Importe total: <span th:text="${order.totalAmount}"></span></td>
+        </tr>
+      </tfoot>
+    </table>
+  </p>
+</body>
+</html>
