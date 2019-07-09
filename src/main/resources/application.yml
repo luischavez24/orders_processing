@@ -1,0 +1,29 @@
+#AMQP RabbitMQ configuration 
+spring:
+  datasource:
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost;databaseName=Store
+    username: sa
+    password: Prueba2019
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  rabbitmq: 
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+    listener:
+      simple: 
+        concurrency: 4
+        max-concurrency: 8
+queue:
+  name: orders
+  exchange: ""
