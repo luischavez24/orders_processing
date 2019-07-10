@@ -72,16 +72,16 @@ public class OrderConsumer {
 	}
 	
 	private void sendOrderProcessingEmail(Order order) {
-		String subject = "[Store] Orden de compra '" + order + "'";
-	
-		processingOrderMailBuilder.withOrder(order);
-		
-		processingOrderMailBuilder.withTemplate("email/processing");
-		
-		String text = processingOrderMailBuilder.build();
-		LOG.info(subject);
-		LOG.info(text);
-		// emailService.sendEmail("luchor13@gmail.com", subject, );
-		
+		Optional<String> email = Optional.of(order.getCustomer().getEmail());
+
+		email.ifPresent(customerEmail -> {
+			String subject = "[Store] La orden de compra '" + order.getId() + "' está siendo procesada";
+
+			processingOrderMailBuilder.withTemplate("email/order_processing")
+					.withOrder(order);
+
+			String text = processingOrderMailBuilder.build();
+			emailService.sendEmail(customerEmail, subject, text);
+		});
 	}
 }

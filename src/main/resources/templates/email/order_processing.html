@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Processing Email Template</title>
+</head>
+<body>
+  <h2>La orden '<span th:text="${order.id}"></span>' está siendo procesada</h2>
+  <p>
+    Hola <span th:text="${order.customer.firstName}"></span>! Gracias por comprar en Store.
+    Te comentamos que tu orden está siendo procesada.
+
+    <table style="margin-bottom: 10px;">
+      <thead>
+        <tr>
+          <th colspan="2" style="text-align:center;">
+            <h3>Datos de compra</h3>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Fecha:</strong>
+          </td>
+          <td>
+            <span th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm:ss')}"></span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Número de orden:</strong>
+          </td>
+          <td>
+            <span th:text="${order.orderNumber}"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table border="1" cellpadding="5">
+      <thead>
+        <tr>
+          <th colspan="5" style="text-align:center;">
+            <h3>Productos comprados</h3>
+          </th>
+        </tr>
+        <tr>
+          <th>Producto</th>
+          <th>Proveedor</th>
+          <th>Precio Unitario</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="item : ${order.items}">
+          <td th:text="${item.product.productName}"></td>
+          <td th:text="${item.product.supplier.companyName}"></td>
+          <td style="text-align: right;" th:text="${'$' + #numbers.formatDecimal(item.unitPrice,2,2)}"></td>
+          <td style="text-align: right;"  th:text="${item.quantity}"></td>
+          <td style="text-align: right;"  th:text="${'$' + #numbers.formatDecimal(item.unitPrice * item.quantity,2,2)}"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="5" style="text-align: right;">
+            <strong>
+              Importe total: $<span th:text="${order.totalAmount}"></span>
+            </strong>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </p>
+</body>
+</html>
